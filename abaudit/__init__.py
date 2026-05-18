@@ -20,7 +20,8 @@ Modules
 - abaudit.report     : HTML report generation
 """
 
-from abaudit._version import __version__
+from abaudit._version  import __version__
+from abaudit.validity  import audit, AuditResult
 
 # ── Public API ──────────────────────────────────────────────────────────────
 # These are the names users get with `import abaudit as ab`.
@@ -36,7 +37,8 @@ from abaudit._version import __version__
 
 __all__ = [
     "__version__",
-    # "audit",
+    "audit",
+    "AuditResult",
     # "power_analysis",
     # "minimum_trustworthy_n",
     # "check_srm",
