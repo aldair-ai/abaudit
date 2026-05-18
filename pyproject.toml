@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "abaudit"
 dynamic = ["version"]
-description = "Statistical validity auditor for A/B tests — because significant ≠ trustworthy."
+description = "Statistical validity auditor for A/B tests — because significant != trustworthy."
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.9"
@@ -65,8 +65,13 @@ Documentation = "https://aldair-ai.github.io/abaudit"
 [tool.hatch.version]
 path = "abaudit/_version.py"
 
+[tool.hatch.build.targets.wheel]
+packages = ["abaudit"]
+
 [tool.ruff]
 line-length = 88
+
+[tool.ruff.lint]
 select = ["E", "F", "W", "I"]
 
 [tool.mypy]
@@ -77,6 +82,10 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--cov=abaudit --cov-report=term-missing --cov-report=xml"
+
+[tool.coverage.run]
+source = ["abaudit"]
+omit = ["tests/*"]
 
 [tool.coverage.report]
 exclude_lines = [
