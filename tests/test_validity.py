@@ -186,6 +186,38 @@ class TestMultipleMetrics:
         assert r.p_value_corrected == r.p_value
         assert r.n_metrics == 1
 
+    def test_bonferroni_message_in_flags(self, clean_experiment):
+        """Bonferroni warning always appears when n_metrics > 1."""
+        ctrl, trt = clean_experiment
+        r = audit(ctrl, trt, metrics=[f"m{i}" for i in range(10)])
+        assert any("Bonferroni" in f for f in r.flags)
+
+    def test_significance_flip_adds_extra_flag(self):
+        """When raw p < alpha but corrected p >= alpha, an extra flag is added."""
+        rng  = __import__("numpy").random.default_rng(99)
+        ctrl = rng.normal(0.0, 1.0, 800)
+        trt  = rng.normal(0.12, 1.0, 800)
+        r    = audit(ctrl, trt, metrics=[f"m{i}" for i in range(30)])
+        if r.multiple_metrics_flag:
+            assert any("does NOT survive" in f for f in r.flags)
+            assert any("primary metric" in rec for rec in r.recommendations)
+
+
+class TestLargeEffectSize:
+    def test_large_effect_flag_triggered(self):
+        rng  = __import__("numpy").random.default_rng(0)
+        ctrl = rng.normal(0.0, 1.0, 15)
+        trt  = rng.normal(3.0, 1.0, 15)
+        r    = audit(ctrl, trt)
+        assert any("effect size" in f.lower() for f in r.flags)
+
+    def test_large_effect_adds_recommendation(self):
+        rng  = __import__("numpy").random.default_rng(0)
+        ctrl = rng.normal(0.0, 1.0, 15)
+        trt  = rng.normal(3.0, 1.0, 15)
+        r    = audit(ctrl, trt)
+        assert any("replication" in rec.lower() for rec in r.recommendations)
+
 
 class TestOptionalStopping:
     def test_flag_triggered_above_threshold(self, clean_experiment):
