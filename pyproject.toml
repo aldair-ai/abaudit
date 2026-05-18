@@ -1,0 +1,85 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "abaudit"
+dynamic = ["version"]
+description = "Statistical validity auditor for A/B tests — because significant ≠ trustworthy."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
+authors = [
+    { name = "Edwin Aldair Espinoza Zegarra", email = "you@email.com" },
+]
+keywords = [
+    "a/b testing",
+    "statistics",
+    "p-value",
+    "experiment",
+    "validity",
+    "p-hacking",
+    "ppv",
+    "data science",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "pandas>=2.0",
+    "jinja2>=3.1",
+    "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "ruff>=0.1",
+    "mypy>=1.5",
+]
+docs = [
+    "mkdocs>=1.5",
+    "mkdocs-material>=9.0",
+    "mkdocstrings[python]>=0.23",
+]
+
+[project.urls]
+Homepage = "https://github.com/aldair-ai/abaudit"
+Repository = "https://github.com/aldair-ai/abaudit"
+Issues = "https://github.com/aldair-ai/abaudit/issues"
+Documentation = "https://aldair-ai.github.io/abaudit"
+
+[tool.hatch.version]
+path = "abaudit/_version.py"
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "W", "I"]
+
+[tool.mypy]
+python_version = "3.9"
+strict = false
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=abaudit --cov-report=term-missing --cov-report=xml"
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+]

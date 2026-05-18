@@ -1,0 +1,31 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [published]   # triggers when you create a GitHub Release
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: pypi          # requires a PyPI environment secret in GitHub
+    permissions:
+      id-token: write          # needed for trusted publishing (no API key required)
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install build tools
+        run: pip install build
+
+      - name: Build distribution
+        run: python -m build
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        # Uses PyPI Trusted Publishing — no API token needed.
+        # Set up at: https://pypi.org/manage/account/publishing/
