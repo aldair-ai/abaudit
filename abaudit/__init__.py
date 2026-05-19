@@ -22,6 +22,13 @@ Modules
 
 from abaudit._version  import __version__
 from abaudit.validity  import audit, AuditResult
+from abaudit.design   import (
+    power_analysis,
+    ppv_given_design,
+    minimum_trustworthy_n,
+    design_summary,
+    DesignResult,
+)
 
 # ── Public API ──────────────────────────────────────────────────────────────
 # These are the names users get with `import abaudit as ab`.
@@ -37,8 +44,15 @@ from abaudit.validity  import audit, AuditResult
 
 __all__ = [
     "__version__",
+    # Post-experiment
     "audit",
     "AuditResult",
+    # Pre-experiment
+    "power_analysis",
+    "ppv_given_design",
+    "minimum_trustworthy_n",
+    "design_summary",
+    "DesignResult",
     # "power_analysis",
     # "minimum_trustworthy_n",
     # "check_srm",
