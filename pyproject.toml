@@ -10,7 +10,7 @@ readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.9"
 authors = [
-    { name = "Edwin Aldair Espinoza Zegarra", email = "you@email.com" },
+    { name = "Edwin Aldair Espinoza Zegarra", email = "e6espinoza@ucsd.edu" },
 ]
 keywords = [
     "a/b testing",
