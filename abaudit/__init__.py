@@ -3,26 +3,34 @@ abaudit — Statistical Validity Auditor for A/B Tests
 =====================================================
 
 Because a significant p-value answers the wrong question.
-abaudit asks: *given that the result is significant, how likely
-is it to be real?*
+abaudit asks: given that the result is significant, how likely
+is it to be real?
 
 Quick start
 -----------
 >>> import abaudit as ab
+
+>>> # Post-experiment audit
 >>> result = ab.audit(control=ctrl, treatment=trt, prior_f=0.2)
 >>> result.summary()
+>>> ab.generate_report(result, "report.html")
 
-Modules
--------
-- abaudit.validity   : post-experiment audit (the core)
-- abaudit.design     : pre-experiment power & PPV planning
-- abaudit.runtime    : during-experiment health checks
-- abaudit.report     : HTML report generation
+>>> # Pre-experiment design
+>>> plan = ab.design_summary(effect_size=0.3, prior_f=0.2)
+>>> plan.summary()
+
+>>> # During-experiment checks
+>>> ab.check_srm(n_control=4850, n_treatment=5150)
+>>> ab.check_optional_stopping([0.12, 0.08, 0.04, 0.06, 0.03])
 """
 
-from abaudit._version  import __version__
-from abaudit.validity  import audit, AuditResult
-from abaudit.design   import (
+from abaudit._version import __version__
+
+# Post-experiment
+from abaudit.validity import audit, AuditResult
+
+# Pre-experiment
+from abaudit.design import (
     power_analysis,
     ppv_given_design,
     minimum_trustworthy_n,
@@ -30,17 +38,15 @@ from abaudit.design   import (
     DesignResult,
 )
 
-# ── Public API ──────────────────────────────────────────────────────────────
-# These are the names users get with `import abaudit as ab`.
-# Everything else is internal (prefix with _) or accessed via submodule.
+# During-experiment
+from abaudit.runtime import (
+    check_srm,
+    check_optional_stopping,
+    check_novelty_effect,
+)
 
-# Imported lazily once the modules exist — scaffolded as stubs for now.
-# Uncomment each line as you build the corresponding module in Phase 1+.
-
-# from abaudit.validity import audit
-# from abaudit.design   import power_analysis, minimum_trustworthy_n
-# from abaudit.runtime  import check_srm, check_optional_stopping
-# from abaudit.report   import generate_report
+# Reporting
+from abaudit.report import generate_report
 
 __all__ = [
     "__version__",
@@ -53,9 +59,10 @@ __all__ = [
     "minimum_trustworthy_n",
     "design_summary",
     "DesignResult",
-    # "power_analysis",
-    # "minimum_trustworthy_n",
-    # "check_srm",
-    # "check_optional_stopping",
-    # "generate_report",
+    # During-experiment
+    "check_srm",
+    "check_optional_stopping",
+    "check_novelty_effect",
+    # Reporting
+    "generate_report",
 ]
