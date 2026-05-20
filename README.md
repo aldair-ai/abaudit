@@ -101,10 +101,10 @@ Where $f$ is your prior probability that the effect exists, $1-\beta$ is your te
 | Phase | Module | Status |
 |-------|--------|--------|
 | 0 | Scaffold + `_stats.py` | ✅ Complete |
-| 1 | `validity.py` — core audit | 🔄 In progress |
-| 2 | `design.py` — pre-experiment | ⏳ Planned |
-| 3 | `runtime.py` — health checks | ⏳ Planned |
-| 4 | `report.py` — HTML reports | ⏳ Planned |
+| 1 | `validity.py` — core audit | ✅ Complete |
+| 2 | `design.py` — pre-experiment | ✅ Complete |
+| 3 | `runtime.py` — health checks | ✅ Complete |
+| 4 | `report.py` — HTML reports | ✅ Complete |
 
 ---
 
