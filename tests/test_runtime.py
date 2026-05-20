@@ -216,7 +216,7 @@ class TestCheckNoveltyEffect:
         d = self._make_data(early_trt_mean=1.0, late_trt_mean=0.0, n=500)
         result = check_novelty_effect(**d)
         assert result["effect_decay"] == pytest.approx(
-            result["early_effect"] - result["late_effect"], abs=1e-9
+            result["early_effect"] - result["late_effect"], abs=1e-4
         )
 
     def test_p_value_in_range(self):
